@@ -1,5 +1,8 @@
 # agent-os
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Claude Code](https://img.shields.io/badge/Claude_Code-compatible-orange)
+
 **Turn Claude Code from a stateless tool into a persistent, self-improving agent.**
 
 Hooks, skills, and memory architecture that give Claude Code session continuity, structured workflows, and the ability to learn from its mistakes.
