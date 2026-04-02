@@ -30,67 +30,33 @@ Where `topic` is a short kebab-case description (e.g., `auth-refactor-wip`).
 ```markdown
 ---
 date: YYYY-MM-DD
-tags: [session, handoff, project-name]
+tags: [session, project-name]
+project: {vault-folder-name}
 ---
 
-# Session Handoff: [Topic]
+# {Topic}
 
-**Project:** [Project name]
-**Duration:** [Approximate session length]
-**Status:** Paused / Blocked / In Progress
+## What Was Done
+- [Completed item 1]
+- [Completed item 2]
+- [Completed item 3]
 
----
+## Current State
+[Describe the state of the code/work -- what's built, what's running, what's broken]
 
-## Summary
-[1-2 sentences describing what this session was about]
-
-## Accomplished
-- [x] Completed item 1
-- [x] Completed item 2
-- [x] Completed item 3
-
-## In Progress
-- [ ] Task that's partially done
-  - What's done: [details]
-  - What's left: [details]
-
-## Not Started
-- [ ] Planned but didn't get to
-- [ ] Deferred for later
-
-## Blockers
-| Blocker | Waiting On | Impact |
-|---------|------------|--------|
-| [description] | [person/event] | [what's blocked] |
-
-## Key Decisions Made
-1. **Decision:** [what was decided]
-   **Rationale:** [why]
-
-## Context for Next Session
-
-### Current State
-[Describe the state of the code/work]
-
-### Files Changed
-- `path/to/file1` - [what changed]
-- `path/to/file2` - [what changed]
-
-### Commands to Resume
-```bash
-# How to pick up where we left off
-cd [project-path]
-[relevant commands]
-```
-
-## Next Steps (Priority Order)
+## Next Steps
 1. [Most important next action]
 2. [Second priority]
 3. [Third priority]
 
-## Notes
-[Any other context that might be helpful]
+## Decisions (if any)
+- **[Decision]:** [rationale]
+
+## Blockers (if any)
+- [What's blocking and what it's waiting on]
 ```
+
+**Critical:** The `project:` frontmatter field MUST match the vault folder name exactly (e.g., `Agent-OS`, `Job-Search`). This feeds the session-start project index. Use `"general"` if the session doesn't map to a specific project.
 
 ## Execution Steps
 
@@ -100,7 +66,7 @@ cd [project-path]
    - What decisions were made?
    - What's still pending?
 
-2. **Identify blockers** — anything preventing progress
+2. **Identify blockers** -- anything preventing progress
 
 3. **List next steps** in priority order
 
@@ -117,4 +83,5 @@ cd [project-path]
 - Include enough context that a fresh session can pick up quickly
 - Don't assume future Claude will have any context from this session
 - Include any error messages or unexpected behaviors encountered
-- All paths come from agent-os.config.json — never hardcode user-specific paths
+- Keep it concise -- under 30 lines of content. Only add Decisions or Blockers if they have content
+- All paths come from agent-os.config.json -- never hardcode user-specific paths

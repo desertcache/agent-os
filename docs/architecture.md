@@ -16,7 +16,8 @@ These layers connect through a **vault** (a folder of markdown files) and a **co
 agent-os.config.json (source of truth)
 ├── vaultPath ──► vault/BRAIN.md, Projects/, Sessions/
 ├── memoryDir ──► MEMORY.md, error-patterns.md, patterns.md, debugging.md
-├── projects[] ──► session-context-preloader.js (project detection)
+├── vaultScanDirs ──► which vault folders to scan (default: ["Projects"])
+├── projects[] ──► fallback codebase mapping for project detection
 └── cacheDir ──► session-context.json, session-activity.log
 ```
 
@@ -40,12 +41,21 @@ Hook receives { cwd } on stdin
     ↓
 Reads agent-os.config.json
     ↓
-Matches cwd against config.projects[].codebase paths
+Scans vault directories (vaultScanDirs, default: ["Projects"])
+  For each folder: reads README.md, parses frontmatter,
+  extracts status, codebase, summary
     ↓
-If match → reads recent Sessions/*.md from vault
+Builds full projectIndex with all discovered entries
+    ↓
+Maps recent Sessions/*.md to projects
+  Pass 1: frontmatter project: tag
+  Pass 2: filename slug matching
+    ↓
+Detects current project from cwd
+  (vault codebase fields → config.projects[] fallback)
     ↓
 Writes cache/session-context.json:
-  { detectedProject, vaultProjectPath, recentSessions }
+  { detectedProject, vaultProjectPath, recentSessions, projectIndex }
     ↓
 /session-start reads this cache for instant briefing
 ```

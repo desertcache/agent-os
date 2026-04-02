@@ -4,7 +4,25 @@ agent-os is designed to be extended. Everything is markdown files and JavaScript
 
 ## Adding Projects
 
-Edit `agent-os.config.json`:
+The preloader auto-discovers projects by scanning vault folders. Just create a folder with a README:
+
+```bash
+mkdir -p <vault>/Projects/my-new-app
+```
+
+And add a README with optional frontmatter:
+
+```markdown
+---
+status: active
+codebase: /path/to/my-new-app
+---
+# my-new-app
+```
+
+The preloader will pick it up automatically on next session start.
+
+**Alternative:** Register projects explicitly in `agent-os.config.json` (useful for projects that don't have a vault folder yet):
 
 ```json
 {
@@ -15,6 +33,16 @@ Edit `agent-os.config.json`:
       "vault": "Projects/my-new-app"
     }
   ]
+}
+```
+
+### Multiple vault categories
+
+If you organize work into categories (e.g., Projects + Ventures), add them to `vaultScanDirs`:
+
+```json
+{
+  "vaultScanDirs": ["Projects", "Ventures"]
 }
 ```
 

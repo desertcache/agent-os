@@ -7,13 +7,13 @@ description: >
   error-patterns.md, patterns.md, and debugging.md. Designed to feel fast, not ceremonial.
 ---
 
-# Retro — Post-Work Reflection
+# Retro -- Post-Work Reflection
 
-Analyze this session's work and capture useful learnings. Only write to files when there's something genuinely new — don't pad.
+Analyze this session's work and capture useful learnings. Only write to files when there's something genuinely new -- don't pad.
 
 ## Step 1: Gather Data
 
-1. Read `~/.claude/cache/session-activity.log` if it exists — shows git commits and pushes from this session
+1. Read `~/.claude/cache/session-activity.log` if it exists -- shows git commits and pushes from this session
 2. Review the conversation history: what files were changed, what errors occurred, what approaches were tried, what worked vs failed
 3. Note any tools that failed, workarounds discovered, or non-obvious solutions
 
@@ -23,7 +23,7 @@ Categorize findings into:
 
 - **Errors**: New error patterns not already in error-patterns.md (tool failures, environment issues, API errors)
 - **Patterns**: New workflow approaches that proved effective (file strategies, tool combinations, architectural decisions)
-- **Debugging**: If debugging occurred — symptoms, root causes, and fixes discovered
+- **Debugging**: If debugging occurred -- symptoms, root causes, and fixes discovered
 
 For each category, check the existing file to avoid duplicating what's already captured.
 
@@ -68,7 +68,17 @@ Place under the appropriate section (Tool & Environment Issues, Code Issues, Int
 
 ## Step 4: Offer Session Note (Optional)
 
-Ask the user: "Want me to save a session note to the vault?" If yes, create a note in `<vaultPath>/Sessions/YYYY-MM-DD-retro.md`.
+Ask the user: "Want me to save a session note to the vault?" If yes, create a note in `<vaultPath>/Sessions/YYYY-MM-DD-retro.md` with frontmatter:
+
+```yaml
+---
+date: YYYY-MM-DD
+tags: [session, retro, {project-tag}]
+project: {vault-folder-name}
+---
+```
+
+The `project:` field must match the vault folder name exactly. Check `~/.claude/cache/session-context.json` for `detectedProject` if unsure. Use `"general"` if no specific project applies.
 
 ## Output Format
 
@@ -90,8 +100,9 @@ Save session note to vault? (y/n)
 
 ## Rules
 - Read each memory file BEFORE writing to check for duplicates
-- Don't add trivial or one-off errors — only patterns likely to recur
+- Don't add trivial or one-off errors -- only patterns likely to recur
 - Don't modify existing entries unless they're clearly wrong
-- Keep entries concise — one or two sentences per field
+- Keep entries concise -- one or two sentences per field
 - If nothing was learned, say so honestly: "Clean session, no new learnings"
 - Clear the activity log after processing: delete `~/.claude/cache/session-activity.log`
+- All paths come from agent-os.config.json -- never hardcode user-specific paths

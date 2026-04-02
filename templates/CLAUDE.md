@@ -14,6 +14,8 @@ When I mention these topics, automatically use the corresponding capability with
 | Project status, where are we, what's blocked | `/project-status` |
 | Audit instructions, check rules | `/audit-instructions` |
 | Index codebase, map codebase | `/index-codebase` |
+| Red team this, challenge this, poke holes | `/red-team` |
+| Meeting notes, process meeting, action items | `/meeting-notes` |
 
 ### Knowledge & Memory
 | I mention... | Auto-use |

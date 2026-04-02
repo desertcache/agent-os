@@ -174,6 +174,20 @@ async function main() {
       addMore = await askYesNo(rl, 'Register another project?', false);
     }
 
+    // Vault scan directories
+    console.log('\n  The preloader auto-discovers projects by scanning vault folders.');
+    console.log('  Default: just "Projects". Add more if you organize work into categories.');
+    const extraDirs = await ask(rl, '  Additional vault folders to scan (comma-separated, or press Enter to skip)');
+    const vaultScanDirs = ['Projects'];
+    if (extraDirs) {
+      for (const dir of extraDirs.split(',').map(d => d.trim()).filter(Boolean)) {
+        if (!vaultScanDirs.includes(dir)) vaultScanDirs.push(dir);
+      }
+    }
+    if (vaultScanDirs.length > 1) {
+      console.log(`  Scanning: ${vaultScanDirs.join(', ')}`);
+    }
+
     // --- Step 4: Detect tools ---
     console.log('\n── Step 4: Tools ──');
 
@@ -194,6 +208,7 @@ async function main() {
       memoryDir,
       cacheDir: normalizePath(path.join(CLAUDE_DIR, 'cache')),
       projects,
+      vaultScanDirs,
       ghCliPath: ghPath || 'gh',
       platform: PLATFORM,
       formatters: {
@@ -223,7 +238,7 @@ async function main() {
 
     // --- Copy skills ---
     const skillsDir = path.join(CLAUDE_DIR, 'skills');
-    const skillNames = ['session-start', 'session-handoff', 'session-cleanup', 'retro', 'project-status', 'audit-instructions', 'index-codebase'];
+    const skillNames = ['session-start', 'session-handoff', 'session-cleanup', 'retro', 'project-status', 'audit-instructions', 'index-codebase', 'red-team', 'meeting-notes'];
     for (const skill of skillNames) {
       const destDir = path.join(skillsDir, skill);
       ensureDir(destDir);
@@ -247,7 +262,7 @@ async function main() {
     console.log(`  Memory: ${memoryDir} (${memCopied} new files, ${memoryFiles.length - memCopied} already existed)`);
 
     // --- Create vault structure ---
-    const vaultDirs = ['Projects', 'Sessions', 'Reference', 'Planning'];
+    const vaultDirs = [...new Set([...vaultScanDirs, 'Sessions', 'Reference', 'Planning'])];
     for (const dir of vaultDirs) {
       ensureDir(path.join(vaultPath, dir));
     }
@@ -409,13 +424,15 @@ Next steps:
   5. Type /session-cleanup when you're done
 
 Skills available:
-  /session-start     — Instant project briefing
-  /session-handoff   — Save context for later
-  /session-cleanup   — End-of-session sync
-  /retro             — Capture what you learned
-  /project-status    — Multi-project dashboard
+  /session-start      — Instant project briefing
+  /session-handoff    — Save context for later
+  /session-cleanup    — End-of-session sync
+  /retro              — Capture what you learned
+  /project-status     — Multi-project dashboard
   /audit-instructions — Check for config drift
-  /index-codebase    — Document a project's structure
+  /index-codebase     — Document a project's structure
+  /red-team           — Adversarial review of plans and designs
+  /meeting-notes      — Process meeting notes with action items
 
 Learn more: https://github.com/desertcache/agent-os
 `);

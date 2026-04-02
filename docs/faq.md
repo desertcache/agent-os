@@ -39,11 +39,28 @@ Yes. It's idempotent — it won't duplicate hooks or overwrite existing memory f
 
 ## Usage
 
+### What changed in v0.2?
+
+See [CHANGELOG.md](../CHANGELOG.md) for the full list. Highlights:
+- **Vault auto-discovery** -- The preloader now scans vault folders for projects instead of requiring manual registration
+- **Two-phase session start** -- Phase 1 shows a full project index, Phase 2 loads deep context on demand
+- **Two new skills** -- `/red-team` for adversarial review, `/meeting-notes` for structured meeting processing
+- **Session-project linking** -- Session notes with `project:` frontmatter are automatically mapped to projects
+
 ### /session-start shows "No project detected"
 
-This means your current working directory doesn't match any registered project. Either:
-- `cd` into a registered project's codebase directory
-- Add the project to `agent-os.config.json`
+This means your current working directory doesn't match any project's codebase path. The preloader checks:
+1. `codebase:` frontmatter in vault project READMEs
+2. `config.projects[]` entries in `agent-os.config.json`
+
+Either `cd` into a project directory, add `codebase:` to the project's vault README frontmatter, or register it in the config.
+
+### My projects aren't showing up in the index
+
+The preloader scans vault folders listed in `vaultScanDirs` (default: `["Projects"]`). Make sure:
+- Your project has a folder under `<vault>/Projects/<name>/`
+- The folder contains a `README.md`
+- If you use a different folder name (e.g., Ventures), add it to `vaultScanDirs` in the config
 
 ### The activity logger isn't capturing my commits
 

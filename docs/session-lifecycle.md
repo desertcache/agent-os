@@ -10,9 +10,11 @@ When you open Claude Code, the `SessionStart` hook fires:
 
 1. `session-context-preloader.js` runs
 2. Reads your working directory from stdin
-3. Matches it against registered projects in `agent-os.config.json`
-4. Scans the vault's `Sessions/` folder for recent handoff notes
-5. Writes everything to `~/.claude/cache/session-context.json`
+3. Scans vault folders (configured via `vaultScanDirs`) for project READMEs
+4. Parses frontmatter and body to extract status, codebase, and summary
+5. Maps recent session notes to projects (via `project:` frontmatter tags, then filename matching)
+6. Detects current project from cwd
+7. Writes full project index to `~/.claude/cache/session-context.json`
 
 This takes <100ms and happens before you type anything.
 
@@ -20,11 +22,29 @@ This takes <100ms and happens before you type anything.
 
 Type `/session-start` (or "catch me up", "where were we"):
 
+**Phase 1 -- If no project detected (e.g., home dir):**
 ```
 Session Context Loaded
 
-Project: my-api
-Last Session: 2026-02-24 - auth-refactor-wip
+## Projects
+| Project | Last Worked | Summary |
+|---------|------------|---------|
+| my-api  | 3/24       | JWT auth partially implemented |
+| my-app  | 3/20       | React dashboard, v2 deployed   |
+
+## Dormant
+old-project (complete), prototype (deprecated)
+
+What are we working on?
+```
+
+**Phase 2 -- After naming a project (or auto-detected from cwd):**
+```
+Deep Context: my-api
+
+Status: active
+Codebase: /path/to/my-api
+Last Session: 3/24 -- auth-refactor-wip
 
 Current State:
 - JWT authentication partially implemented
@@ -32,9 +52,9 @@ Current State:
 - Middleware needs testing
 
 Blockers: Waiting on OAuth provider credentials
-Warnings: Remember to use `rm` not `del` in this environment
+Watch out for: Use `rm` not `del` in this environment
 
-What's the focus today?
+What's the focus?
 ```
 
 ## Phase 2: Working
@@ -50,13 +70,12 @@ The **3-strike rule** is also active: if Claude makes the same type of error 3+ 
 
 If you need to pause work, type `/session-handoff`:
 
-This creates a structured note at `<vault>/Sessions/YYYY-MM-DD-topic.md` with:
-- Summary of what was done
-- In-progress tasks with state
-- Blockers and decisions made
-- Files changed with descriptions
-- Commands to resume
+This creates a streamlined note at `<vault>/Sessions/YYYY-MM-DD-topic.md` with:
+- `project:` frontmatter linking to the vault project folder
+- What was done (bullet list)
+- Current state of the work
 - Prioritized next steps
+- Decisions and blockers (only if applicable)
 
 ## Phase 4: Retrospective
 

@@ -18,6 +18,7 @@ Create `~/.claude/agent-os.config.json`:
       "vault": "Projects/my-project"
     }
   ],
+  "vaultScanDirs": ["Projects"],
   "ghCliPath": "gh",
   "platform": "auto",
   "formatters": {
@@ -26,6 +27,8 @@ Create `~/.claude/agent-os.config.json`:
   }
 }
 ```
+
+`vaultScanDirs` tells the preloader which vault folders to scan for project READMEs. Default is `["Projects"]`. Add more if you organize work into categories (e.g., `["Projects", "Ventures"]`).
 
 Adjust paths for your system. Use forward slashes even on Windows.
 
@@ -39,7 +42,7 @@ cp hooks/session-activity-logger.js ~/.claude/hooks/
 ## 3. Copy skills
 
 ```bash
-for skill in session-start session-handoff session-cleanup retro project-status audit-instructions index-codebase; do
+for skill in session-start session-handoff session-cleanup retro project-status audit-instructions index-codebase red-team meeting-notes; do
   mkdir -p ~/.claude/skills/$skill
   cp skills/$skill/SKILL.md ~/.claude/skills/$skill/
 done

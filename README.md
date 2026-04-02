@@ -36,8 +36,9 @@ node setup.js
 The setup script will:
 1. Ask for your vault directory (where session notes and project docs live)
 2. Let you register your projects (name + codebase path)
-3. Detect your tools (gh CLI, formatters)
-4. Install hooks, skills, memory templates, and vault structure into `~/.claude/`
+3. Configure vault scan directories (for auto-discovering projects)
+4. Detect your tools (gh CLI, formatters)
+5. Install hooks, 9 skills, memory templates, and vault structure into `~/.claude/`
 
 Then open Claude Code and type `/session-start`.
 
@@ -53,12 +54,12 @@ Then open Claude Code and type `/session-start`.
 │       │                                                         │
 │       ▼                                                         │
 │  SessionStart hook ──► session-context-preloader.js             │
-│       │                  reads config, detects project,         │
-│       │                  scans recent sessions                  │
+│       │                  scans vault, builds project index,     │
+│       │                  maps sessions, detects project         │
 │       │                  writes cache/session-context.json      │
 │       ▼                                                         │
-│  /session-start ──► reads cache + vault README + error warnings │
-│       │              prints instant project briefing            │
+│  /session-start ──► Phase 1: project index overview             │
+│       │              Phase 2: deep context for chosen project   │
 │       │                                                         │
 │       ▼                                                         │
 │  ┌─────────────────────────────┐                                │
@@ -92,20 +93,22 @@ Then open Claude Code and type `/session-start`.
 
 | Hook | Trigger | What It Does |
 |------|---------|-------------|
-| [session-context-preloader](hooks/session-context-preloader.js) | Session start | Pre-gathers project context into cache for instant briefings |
+| [session-context-preloader](hooks/session-context-preloader.js) | Session start | Scans vault, builds project index, detects current project |
 | [session-activity-logger](hooks/session-activity-logger.js) | After Bash commands | Logs git commits/pushes for retrospective analysis |
 
 ### Skills (user-invoked)
 
 | Skill | Command | What It Does |
 |-------|---------|-------------|
-| [session-start](skills/session-start/SKILL.md) | `/session-start` | Instant briefing: project state, blockers, recent sessions |
+| [session-start](skills/session-start/SKILL.md) | `/session-start` | Two-phase briefing: project index then deep context |
 | [session-handoff](skills/session-handoff/SKILL.md) | `/session-handoff` | Create structured handoff note for session continuity |
 | [session-cleanup](skills/session-cleanup/SKILL.md) | `/session-cleanup` | End-of-session: update vault, memory, errors, push to git |
 | [retro](skills/retro/SKILL.md) | `/retro` | Post-work reflection: capture learnings to memory files |
 | [project-status](skills/project-status/SKILL.md) | `/project-status` | Multi-project dashboard with blockers and next actions |
 | [audit-instructions](skills/audit-instructions/SKILL.md) | `/audit-instructions` | Detect stale, missing, redundant, or conflicting config |
 | [index-codebase](skills/index-codebase/SKILL.md) | `/index-codebase` | Generate CODEBASE.md documenting a project's structure |
+| [red-team](skills/red-team/SKILL.md) | `/red-team` | Adversarial review of plans, architectures, and decisions |
+| [meeting-notes](skills/meeting-notes/SKILL.md) | `/meeting-notes` | Process meeting notes into structured format with action items |
 
 ### Memory (persistent, self-improving)
 
