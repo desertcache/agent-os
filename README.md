@@ -15,7 +15,7 @@ Hooks, skills, and memory architecture that give Claude Code session continuity,
 
 Claude Code is powerful but amnesiac. Every session starts from zero. It doesn't remember what it broke yesterday, what decisions you made last week, or where you left off an hour ago.
 
-You can write a `CLAUDE.md` file, but that's a static document — it doesn't grow with your agent's experience, adapt to your workflow, or connect your sessions into a continuous narrative. The result: you re-explain context, re-encounter the same bugs, and lose hours to problems your agent should already know how to avoid.
+You can write a `CLAUDE.md` file, but that's a static document: it doesn't grow with your agent's experience, adapt to your workflow, or connect your sessions into a continuous narrative. The result: you re-explain context, re-encounter the same bugs, and lose hours to problems your agent should already know how to avoid.
 
 ## What agent-os Gives You
 
@@ -25,7 +25,7 @@ You can write a `CLAUDE.md` file, but that's a static document — it doesn't gr
 | Same tool errors repeated across sessions | Error patterns captured and consulted automatically |
 | Context lost when you pause work | Structured handoff notes for seamless session continuity |
 | Manual status tracking across projects | One command for a multi-project status dashboard |
-| No feedback loop — agent never improves | `/retro` captures learnings, `/audit-instructions` detects drift |
+| No feedback loop: the agent never improves | `/retro` captures learnings, `/audit-instructions` detects drift |
 
 ## Quick Start
 
@@ -152,7 +152,7 @@ error-patterns.md          patterns.md              debugging.md
 **Quality gates prevent memory bloat:**
 - **3-strike rule**: Only persist patterns that recur 3+ times in a session
 - **Duplicate detection**: Check existing patterns before adding new ones
-- **Prescriptive format**: "What to DO" not "what went wrong" — actionable, not narrative
+- **Prescriptive format**: "What to DO" not "what went wrong": actionable, not narrative
 - **Category enforcement**: Each pattern goes in a specific section, not dumped randomly
 
 Read more: [docs/memory-system.md](docs/memory-system.md)
@@ -161,10 +161,10 @@ Read more: [docs/memory-system.md](docs/memory-system.md)
 
 agent-os is designed to be extended:
 
-- **Add your own skills** — Drop a `SKILL.md` in `~/.claude/skills/your-skill/`
-- **Add auto-dispatch rules** — Edit `CLAUDE.md` to trigger tools from natural language
-- **Extend memory categories** — Add new sections to patterns.md or create new memory files
-- **Register projects** — Edit `agent-os.config.json` or re-run `node setup.js`
+- **Add your own skills**: Drop a `SKILL.md` in `~/.claude/skills/your-skill/`
+- **Add auto-dispatch rules**: Edit `CLAUDE.md` to trigger tools from natural language
+- **Extend memory categories**: Add new sections to patterns.md or create new memory files
+- **Register projects**: Edit `agent-os.config.json` or re-run `node setup.js`
 
 Read more: [docs/customization.md](docs/customization.md)
 
@@ -172,18 +172,18 @@ Read more: [docs/customization.md](docs/customization.md)
 
 > Agentic engineering isn't about building agents. It's about building the infrastructure that makes agents reliable, persistent, and self-improving.
 
-Most AI tooling focuses on the model — better prompts, bigger context windows, more tools. agent-os focuses on the **infrastructure layer**: How does the agent remember? How does it learn from mistakes? How does it maintain continuity across sessions? How does it know when its own config is drifting?
+Most AI tooling focuses on the model: better prompts, bigger context windows, more tools. agent-os focuses on the **infrastructure layer**: How does the agent remember? How does it learn from mistakes? How does it maintain continuity across sessions? How does it know when its own config is drifting?
 
 These are DevOps problems applied to AI agents. agent-os is the answer.
 
 ## Documentation
 
-- [Architecture](docs/architecture.md) — How the system works
-- [Session Lifecycle](docs/session-lifecycle.md) — Step-by-step session flow
-- [Memory System](docs/memory-system.md) — Three-file architecture with quality gates
-- [Customization](docs/customization.md) — Extending and modifying agent-os
-- [Manual Setup](docs/manual-setup.md) — Install without the setup script
-- [FAQ](docs/faq.md) — Common questions
+- [Architecture](docs/architecture.md): How the system works
+- [Session Lifecycle](docs/session-lifecycle.md): Step-by-step session flow
+- [Memory System](docs/memory-system.md): Three-file architecture with quality gates
+- [Customization](docs/customization.md): Extending and modifying agent-os
+- [Manual Setup](docs/manual-setup.md): Install without the setup script
+- [FAQ](docs/faq.md): Common questions
 
 ## Contributing
 
@@ -195,4 +195,4 @@ Contributions welcome. The most valuable contributions are:
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
