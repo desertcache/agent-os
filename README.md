@@ -5,6 +5,8 @@
 
 **Turn Claude Code from a stateless tool into a persistent, self-improving agent.**
 
+> **Status, October 2026:** last updated in April 2026. This is a snapshot of my Claude Code setup as of then, kept public as a reference.
+
 Hooks, skills, and memory architecture that give Claude Code session continuity, structured workflows, and the ability to learn from its mistakes.
 
 ---
